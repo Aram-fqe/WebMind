@@ -25,6 +25,7 @@ export async function initDb() {
       chunk_id VARCHAR(512) UNIQUE NOT NULL,
       webpage_id INTEGER REFERENCES webpages(id) ON DELETE CASCADE,
       source_url TEXT NOT NULL,
+      page_title TEXT,
       chunk_index INTEGER NOT NULL,
       text TEXT NOT NULL,
       embedding vector(1536),

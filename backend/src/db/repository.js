@@ -36,14 +36,15 @@ export async function saveChunks(webpageId, chunks) {
     const vectorString = chunk.embedding ? `[${chunk.embedding.join(',')}]` : null;
     
     const sql = `
-      INSERT INTO document_chunks (chunk_id, webpage_id, source_url, chunk_index, text, embedding, metadata)
-      VALUES ($1, $2, $3, $4, $5, $6::vector, $7)
+      INSERT INTO document_chunks (chunk_id, webpage_id, source_url, page_title, chunk_index, text, embedding, metadata)
+      VALUES ($1, $2, $3, $4, $5, $6, $7::vector, $8)
       RETURNING id, chunk_id, chunk_index, text, metadata;
     `;
     const params = [
       chunk.chunk_id,
       webpageId,
       chunk.source_url,
+      chunk.page_title || '',
       chunk.chunk_index,
       chunk.text,
       vectorString,
