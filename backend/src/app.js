@@ -2,6 +2,7 @@ import express from 'express';
 import healthRoutes from './routes/health.js';
 import ingestRoutes from './routes/ingest.js';
 import searchRoutes from './routes/search.js';
+import askRoutes from './routes/ask.js';
 import { logger } from './utils/logger.js';
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use('/', healthRoutes);
 app.use('/', ingestRoutes);
 app.use('/', searchRoutes);
+app.use('/', askRoutes);
 
 // 404 Handler
 app.use((req, res) => {
