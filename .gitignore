@@ -4,3 +4,7 @@ node_modules/
 *.log
 dist/
 build/
+
+# Evaluation & runtime logs
+backend/logs/
+backend/eval/results/

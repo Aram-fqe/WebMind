@@ -1,0 +1,332 @@
+{
+  "version": "1.0",
+  "description": "WebMind Phase 1 evaluation dataset — technical/electronics/instrumentation questions across 5 webpages",
+  "created_at": null,
+  "pages": [
+    {
+      "id": "page_1",
+      "url": null,
+      "title": null,
+      "topic": "Page 1 — topic TBD",
+      "ingested": false
+    },
+    {
+      "id": "page_2",
+      "url": null,
+      "title": null,
+      "topic": "Page 2 — topic TBD",
+      "ingested": false
+    },
+    {
+      "id": "page_3",
+      "url": null,
+      "title": null,
+      "topic": "Page 3 — topic TBD",
+      "ingested": false
+    },
+    {
+      "id": "page_4",
+      "url": null,
+      "title": null,
+      "topic": "Page 4 — topic TBD",
+      "ingested": false
+    },
+    {
+      "id": "page_5",
+      "url": null,
+      "title": null,
+      "topic": "Page 5 — topic TBD",
+      "ingested": false
+    }
+  ],
+  "question_types": {
+    "direct": "Answer is stated explicitly in the text",
+    "definition": "Asks for the meaning/definition of a concept or term",
+    "relationship": "Asks how two concepts relate or interact",
+    "comparison": "Asks to compare or contrast items",
+    "specific": "Asks for a specific value, unit, range, or formula",
+    "unanswerable": "Answer is NOT present in the ingested content"
+  },
+  "questions": [
+    {
+      "id": "q01",
+      "page": "page_1",
+      "question": "PLACEHOLDER — replace after selecting page 1",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q02",
+      "page": "page_1",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "definition"
+    },
+    {
+      "id": "q03",
+      "page": "page_1",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "relationship"
+    },
+    {
+      "id": "q04",
+      "page": "page_1",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "comparison"
+    },
+    {
+      "id": "q05",
+      "page": "page_1",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "specific"
+    },
+    {
+      "id": "q06",
+      "page": "page_1",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q07",
+      "page": "page_1",
+      "question": "PLACEHOLDER — this question should NOT be answerable from page 1",
+      "expected_answer": "NOT_ANSWERABLE",
+      "expected_source": null,
+      "question_type": "unanswerable"
+    },
+    {
+      "id": "q08",
+      "page": "page_2",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q09",
+      "page": "page_2",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "definition"
+    },
+    {
+      "id": "q10",
+      "page": "page_2",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "relationship"
+    },
+    {
+      "id": "q11",
+      "page": "page_2",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "comparison"
+    },
+    {
+      "id": "q12",
+      "page": "page_2",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "specific"
+    },
+    {
+      "id": "q13",
+      "page": "page_2",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q14",
+      "page": "page_2",
+      "question": "PLACEHOLDER — unanswerable from page 2",
+      "expected_answer": "NOT_ANSWERABLE",
+      "expected_source": null,
+      "question_type": "unanswerable"
+    },
+    {
+      "id": "q15",
+      "page": "page_3",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q16",
+      "page": "page_3",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "definition"
+    },
+    {
+      "id": "q17",
+      "page": "page_3",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "relationship"
+    },
+    {
+      "id": "q18",
+      "page": "page_3",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "comparison"
+    },
+    {
+      "id": "q19",
+      "page": "page_3",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "specific"
+    },
+    {
+      "id": "q20",
+      "page": "page_3",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q21",
+      "page": "page_3",
+      "question": "PLACEHOLDER — unanswerable from page 3",
+      "expected_answer": "NOT_ANSWERABLE",
+      "expected_source": null,
+      "question_type": "unanswerable"
+    },
+    {
+      "id": "q22",
+      "page": "page_4",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q23",
+      "page": "page_4",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "definition"
+    },
+    {
+      "id": "q24",
+      "page": "page_4",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "specific"
+    },
+    {
+      "id": "q25",
+      "page": "page_4",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "relationship"
+    },
+    {
+      "id": "q26",
+      "page": "page_4",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "comparison"
+    },
+    {
+      "id": "q27",
+      "page": "page_4",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q28",
+      "page": "page_4",
+      "question": "PLACEHOLDER — unanswerable from page 4",
+      "expected_answer": "NOT_ANSWERABLE",
+      "expected_source": null,
+      "question_type": "unanswerable"
+    },
+    {
+      "id": "q29",
+      "page": "page_5",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q30",
+      "page": "page_5",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "definition"
+    },
+    {
+      "id": "q31",
+      "page": "page_5",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "specific"
+    },
+    {
+      "id": "q32",
+      "page": "page_5",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "relationship"
+    },
+    {
+      "id": "q33",
+      "page": "page_5",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "comparison"
+    },
+    {
+      "id": "q34",
+      "page": "page_5",
+      "question": "PLACEHOLDER",
+      "expected_answer": "PLACEHOLDER",
+      "expected_source": null,
+      "question_type": "direct"
+    },
+    {
+      "id": "q35",
+      "page": "page_5",
+      "question": "PLACEHOLDER — unanswerable from page 5",
+      "expected_answer": "NOT_ANSWERABLE",
+      "expected_source": null,
+      "question_type": "unanswerable"
+    }
+  ]
+}

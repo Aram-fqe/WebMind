@@ -1,5 +1,6 @@
 import { searchSimilarChunks } from './retrievalService.js';
 import { generateAnswer } from './answerService.js';
+import { logAskRequest } from '../logging/evalLogger.js';
 import { ValidationError } from '../utils/errors.js';
 import { logger } from '../utils/logger.js';
 
@@ -22,6 +23,8 @@ const NOT_ENOUGH_INFO_ANSWER =
  * Orchestrates retrievalService and answerService while keeping them
  * fully decoupled — neither knows about the other.
  *
+ * Every request is logged to JSONL for offline evaluation.
+ *
  * @param {string} question - Natural-language question
  * @param {Object} [options]
  * @param {number} [options.topK=5] - Number of chunks to retrieve
@@ -38,6 +41,7 @@ const NOT_ENOUGH_INFO_ANSWER =
  */
 export async function ask(question, options = {}) {
   const topK = options.topK || 5;
+  const startTime = Date.now();
 
   // ── Input validation ──────────────────────────────────────────────────
   if (!question || typeof question !== 'string' || !question.trim()) {
@@ -70,7 +74,18 @@ export async function ask(question, options = {}) {
   // answer without grounding context.
   if (chunks.length === 0) {
     logger.warn(TAG, `[2/3] No chunks retrieved — returning safe response`);
-    return { answer: NOT_ENOUGH_INFO_ANSWER, sources: [] };
+    const response = { answer: NOT_ENOUGH_INFO_ANSWER, sources: [] };
+    // Log for evaluation (fire-and-forget)
+    logAskRequest({
+      question: cleanQuestion,
+      answer: response.answer,
+      sources: response.sources,
+      retrieval_count: 0,
+      relevant_count: 0,
+      relevance_gate_passed: false,
+      latency_ms: Date.now() - startTime,
+    });
+    return response;
   }
 
   const relevantChunks = chunks.filter(
@@ -89,7 +104,18 @@ export async function ask(question, options = {}) {
       similarity_score: c.similarity_score,
       text_preview: c.chunk_text.substring(0, 150) + (c.chunk_text.length > 150 ? '...' : ''),
     }));
-    return { answer: NOT_ENOUGH_INFO_ANSWER, sources };
+    const response = { answer: NOT_ENOUGH_INFO_ANSWER, sources };
+    // Log for evaluation (fire-and-forget)
+    logAskRequest({
+      question: cleanQuestion,
+      answer: response.answer,
+      sources: response.sources,
+      retrieval_count: chunks.length,
+      relevant_count: 0,
+      relevance_gate_passed: false,
+      latency_ms: Date.now() - startTime,
+    });
+    return response;
   }
 
   logger.info(TAG, `[2/3] ${relevantChunks.length}/${chunks.length} chunks above threshold`, {
@@ -113,5 +139,17 @@ export async function ask(question, options = {}) {
     source_count: result.sources.length,
   });
 
+  // Log for evaluation (fire-and-forget)
+  logAskRequest({
+    question: cleanQuestion,
+    answer: result.answer,
+    sources: result.sources,
+    retrieval_count: chunks.length,
+    relevant_count: relevantChunks.length,
+    relevance_gate_passed: true,
+    latency_ms: Date.now() - startTime,
+  });
+
   return result;
 }
+
