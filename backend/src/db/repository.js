@@ -78,6 +78,7 @@ export async function searchSimilarChunks(queryVector, options = {}) {
     SELECT 
       chunk_id,
       source_url,
+      page_title,
       chunk_index,
       text,
       metadata,
@@ -100,10 +101,11 @@ export async function searchSimilarChunks(queryVector, options = {}) {
 
   return result.rows.map(row => ({
     chunk_id: row.chunk_id,
+    chunk_text: row.text,
     source_url: row.source_url,
-    chunk_index: row.chunk_index,
-    text: row.text,
+    page_title: row.page_title,
     similarity_score: parseFloat(row.similarity_score.toFixed(4)),
+    chunk_index: row.chunk_index,
     metadata: row.metadata
   }));
 }
