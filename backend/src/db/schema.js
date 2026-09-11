@@ -18,7 +18,7 @@ export async function initDb() {
     );
   `);
 
-  // 3. Create document_chunks table with vector(1536) column
+  // 3. Create document_chunks table with vector(768) column
   await query(`
     CREATE TABLE IF NOT EXISTS document_chunks (
       id SERIAL PRIMARY KEY,
@@ -28,7 +28,7 @@ export async function initDb() {
       page_title TEXT,
       chunk_index INTEGER NOT NULL,
       text TEXT NOT NULL,
-      embedding vector(1536),
+      embedding vector(768),
       metadata JSONB DEFAULT '{}'::jsonb,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );

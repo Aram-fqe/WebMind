@@ -1,5 +1,6 @@
 import { EmbeddingService } from '../embeddings/embeddingService.js';
 import { searchSimilarChunks as dbSearchSimilarChunks } from '../db/repository.js';
+import { rerankChunks } from './rerankService.js';
 import { logger } from '../utils/logger.js';
 import { ValidationError } from '../utils/errors.js';
 
@@ -8,7 +9,7 @@ const TAG = 'RETRIEVAL';
 
 /**
  * Semantic retrieval pipeline:
- *   question → embedding → pgvector cosine similarity search → top K chunks
+ *   question → embedding → pgvector cosine similarity search → Cohere rerank → top K chunks
  *
  * Uses cosine similarity via pgvector's `<=>` operator (cosine distance).
  * Similarity is calculated as: similarity_score = 1 - cosine_distance
@@ -17,6 +18,9 @@ const TAG = 'RETRIEVAL';
  *
  * The HNSW index (vector_cosine_ops) on the embedding column accelerates
  * the search to approximate nearest-neighbor instead of brute-force scan.
+ *
+ * After vector search, Cohere reranking (cross-encoder) re-scores candidates
+ * for semantic relevance, producing much better ordering than cosine alone.
  *
  * @param {string} queryText - Natural-language question to search for
  * @param {number} [topK=5] - Number of most-similar chunks to return
@@ -30,6 +34,7 @@ const TAG = 'RETRIEVAL';
  *     source_url: string,
  *     page_title: string,
  *     similarity_score: number,
+ *     relevance_score: number,
  *     chunk_index: number
  *   }>
  * }>}
@@ -57,33 +62,34 @@ export async function searchSimilarChunks(queryText, topK = 5) {
   logger.info(TAG, `Starting semantic search`, { query: cleanQuery, topK });
 
   // ── Step 1: Embed the query ───────────────────────────────────────────
-  // The same embedding model (text-embedding-3-small, 1536-dim) used during
+  // The same embedding model (text-embedding-004, 768-dim) used during
   // ingestion is reused here so query and document vectors live in the same
   // vector space — a requirement for cosine similarity to be meaningful.
-  logger.info(TAG, `[1/2] Generating query embedding...`);
+  logger.info(TAG, `[1/3] Generating query embedding...`);
   const [queryVector] = await embeddingService.generateEmbeddings([cleanQuery]);
 
   if (!queryVector || queryVector.length === 0) {
     throw new Error('[RetrievalService] Failed to generate embedding for query.');
   }
 
-  logger.info(TAG, `[1/2] Query embedding generated`, {
+  logger.info(TAG, `[1/3] Query embedding generated`, {
     dimensions: queryVector.length,
   });
 
   // ── Step 2: pgvector similarity search ────────────────────────────────
+  // Over-fetch candidates (topK * 3) to give the reranker a wider pool.
   // Delegates to repository.searchSimilarChunks which runs:
   //   SELECT ... (1 - (embedding <=> $1::vector)) AS similarity_score
   //   ORDER BY embedding <=> $1::vector ASC LIMIT $N
   //
   // <=> is pgvector's cosine distance operator.
   // Lower distance = higher similarity, so we ORDER ASC and compute 1 - distance.
-  logger.info(TAG, `[2/2] Searching pgvector for top ${topK} similar chunks...`);
-  const results = await dbSearchSimilarChunks(queryVector, { limit: topK });
+  const candidateCount = topK * 3;
+  logger.info(TAG, `[2/3] Searching pgvector for top ${candidateCount} candidates...`);
+  const candidates = await dbSearchSimilarChunks(queryVector, { limit: candidateCount });
 
-  // ── Development logging: chunk IDs and similarity scores ──────────────
-  logger.info(TAG, `[2/2] Search complete — ${results.length} chunks retrieved`);
-  results.forEach((chunk, i) => {
+  logger.info(TAG, `[2/3] Vector search complete — ${candidates.length} candidates retrieved`);
+  candidates.forEach((chunk, i) => {
     logger.info(TAG, `  #${i + 1}`, {
       chunk_id: chunk.chunk_id,
       similarity_score: chunk.similarity_score,
@@ -92,13 +98,22 @@ export async function searchSimilarChunks(queryText, topK = 5) {
     });
   });
 
+  // ── Step 3: Cohere reranking ──────────────────────────────────────────
+  // Cross-encoder reranker re-scores each (query, chunk) pair for
+  // semantic relevance, producing much better ordering than cosine alone.
+  logger.info(TAG, `[3/3] Reranking candidates with Cohere...`);
+  const reranked = await rerankChunks(cleanQuery, candidates, { topN: topK });
+
+  logger.info(TAG, `[3/3] Reranking complete — ${reranked.length} chunks selected`);
+
   // ── Shape the response (strip internal metadata) ──────────────────────
-  const shaped = results.map(chunk => ({
+  const shaped = reranked.map(chunk => ({
     chunk_id: chunk.chunk_id,
     chunk_text: chunk.chunk_text,
     source_url: chunk.source_url,
     page_title: chunk.page_title,
     similarity_score: chunk.similarity_score,
+    relevance_score: chunk.relevance_score,
     chunk_index: chunk.chunk_index,
   }));
 

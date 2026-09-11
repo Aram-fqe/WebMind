@@ -1,4 +1,3 @@
-import OpenAI from 'openai';
 import { getEmbeddingConfig } from '../config/embeddingConfig.js';
 import { saveChunks } from '../db/repository.js';
 
@@ -9,17 +8,16 @@ export class EmbeddingService {
     this.model = config.model;
     this.dimension = config.dimension;
     this.maxBatchSize = config.maxBatchSize || 100;
-    
-    if (config.apiKey) {
-      this.openai = new OpenAI({ apiKey: config.apiKey });
-    } else {
-      this.openai = null;
-    }
+    this.apiKey = config.apiKey;
+    this.baseUrl = config.baseUrl;
   }
 
   /**
-   * Generates embedding vectors for an array of input texts.
+   * Generates embedding vectors for an array of input texts using Google Gemini.
    * Handles batching, rate limits, empty inputs, and API errors.
+   * 
+   * Uses the Gemini batchEmbedContents endpoint:
+   *   POST /v1beta/models/{model}:batchEmbedContents?key={apiKey}
    * 
    * @param {string[]} texts Array of text strings to embed
    * @returns {Promise<number[][]>} Array of embedding vectors matching input texts index-for-index
@@ -36,8 +34,8 @@ export class EmbeddingService {
       throw new Error('[EmbeddingService] Input array contains no valid non-empty text strings.');
     }
 
-    if (!this.openai) {
-      throw new Error('[EmbeddingService] OPENAI_API_KEY is not configured in environment.');
+    if (!this.apiKey) {
+      throw new Error('[EmbeddingService] GEMINI_API_KEY is not configured in environment.');
     }
 
     const embeddings = new Array(cleanedTexts.length);
@@ -50,38 +48,59 @@ export class EmbeddingService {
       const validBatchTexts = batchTexts.map(t => t || ' ');
 
       try {
-        const response = await this.openai.embeddings.create({
-          model: this.model,
-          input: validBatchTexts,
-          encoding_format: 'float'
+        // Build Gemini batchEmbedContents request body
+        const requests = validBatchTexts.map(text => ({
+          model: `models/${this.model}`,
+          content: { parts: [{ text }] },
+          outputDimensionality: this.dimension,
+        }));
+
+        const url = `${this.baseUrl}/models/${this.model}:batchEmbedContents?key=${this.apiKey}`;
+        
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ requests }),
         });
 
-        if (!response || !response.data || !Array.isArray(response.data)) {
-          throw new Error('[EmbeddingService] Unexpected response format received from OpenAI API.');
+        if (!response.ok) {
+          const errorBody = await response.text();
+          if (response.status === 429) {
+            throw new Error(`[EmbeddingService] Gemini rate limit exceeded (429): ${errorBody}`);
+          } else if (response.status === 401 || response.status === 403) {
+            throw new Error(`[EmbeddingService] Invalid API Key (${response.status}). Please check GEMINI_API_KEY.`);
+          }
+          throw new Error(`[EmbeddingService] Gemini API Error [${response.status}]: ${errorBody}`);
         }
 
-        response.data.forEach((item, index) => {
+        const data = await response.json();
+
+        if (!data || !data.embeddings || !Array.isArray(data.embeddings)) {
+          throw new Error('[EmbeddingService] Unexpected response format received from Gemini embedding API.');
+        }
+
+        data.embeddings.forEach((item, index) => {
           const originalIndex = i + index;
           if (batchTexts[index] === '') {
             // For empty input, return zero-vector
             embeddings[originalIndex] = new Array(this.dimension).fill(0);
           } else {
-            if (item.embedding.length !== this.dimension) {
+            const vector = item.values;
+            if (vector.length !== this.dimension) {
               console.warn(
-                `[EmbeddingService] Dimension mismatch! Expected ${this.dimension}, received ${item.embedding.length}`
+                `[EmbeddingService] Dimension mismatch! Expected ${this.dimension}, received ${vector.length}`
               );
             }
-            embeddings[originalIndex] = item.embedding;
+            embeddings[originalIndex] = vector;
           }
         });
 
       } catch (err) {
-        if (err.status === 429) {
-          throw new Error(`[EmbeddingService] OpenAI Rate limit exceeded (429): ${err.message}`);
-        } else if (err.status === 401) {
-          throw new Error(`[EmbeddingService] Invalid OpenAI API Key (401). Please check OPENAI_API_KEY.`);
+        // Re-throw our own formatted errors, wrap unexpected ones
+        if (err.message.startsWith('[EmbeddingService]')) {
+          throw err;
         }
-        throw new Error(`[EmbeddingService] OpenAI API Error [${err.status || 'UNKNOWN'}]: ${err.message}`);
+        throw new Error(`[EmbeddingService] Embedding API Error: ${err.message}`);
       }
     }
 

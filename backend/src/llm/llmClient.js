@@ -5,7 +5,8 @@ import { logger } from '../utils/logger.js';
 const TAG = 'LLM_CLIENT';
 
 /**
- * Thin wrapper around the OpenAI Chat Completions API.
+ * Thin wrapper around an OpenAI-compatible Chat Completions API.
+ * Supports Groq, OpenRouter, and any provider with a compatible endpoint.
  *
  * Isolates all LLM transport concerns (auth, request format, error handling)
  * so that consumers only deal with messages-in → text-out.
@@ -19,7 +20,10 @@ export class LlmClient {
     this.temperature = config.temperature;
 
     if (config.apiKey) {
-      this.openai = new OpenAI({ apiKey: config.apiKey });
+      this.openai = new OpenAI({
+        apiKey: config.apiKey,
+        baseURL: config.baseUrl,
+      });
     } else {
       this.openai = null;
     }
@@ -37,7 +41,7 @@ export class LlmClient {
    */
   async chatCompletion(systemPrompt, userPrompt, options = {}) {
     if (!this.openai) {
-      throw new Error('[LlmClient] OPENAI_API_KEY is not configured in environment.');
+      throw new Error('[LlmClient] GROQ_API_KEY is not configured in environment.');
     }
 
     const maxTokens = options.maxTokens || this.maxTokens;
@@ -80,13 +84,13 @@ export class LlmClient {
       return { text, usage };
     } catch (err) {
       if (err.status === 429) {
-        throw new Error(`[LlmClient] OpenAI rate limit exceeded (429): ${err.message}`);
+        throw new Error(`[LlmClient] LLM provider rate limit exceeded (429): ${err.message}`);
       } else if (err.status === 401) {
-        throw new Error(`[LlmClient] Invalid OpenAI API Key (401). Please check OPENAI_API_KEY.`);
+        throw new Error(`[LlmClient] Invalid API Key (401). Please check GROQ_API_KEY.`);
       } else if (err.status === 400) {
         throw new Error(`[LlmClient] Bad request (400): ${err.message}`);
       }
-      throw new Error(`[LlmClient] OpenAI API Error [${err.status || 'UNKNOWN'}]: ${err.message}`);
+      throw new Error(`[LlmClient] LLM API Error [${err.status || 'UNKNOWN'}]: ${err.message}`);
     }
   }
 }

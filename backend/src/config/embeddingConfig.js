@@ -4,9 +4,10 @@ dotenv.config();
 
 export const getEmbeddingConfig = () => {
   return {
-    apiKey: process.env.OPENAI_API_KEY,
-    model: process.env.EMBEDDING_MODEL || 'text-embedding-3-small',
-    dimension: parseInt(process.env.EMBEDDING_DIMENSION || '1536', 10),
-    maxBatchSize: 100 // OpenAI API safety batch limit per request
+    apiKey: process.env.GEMINI_API_KEY,
+    baseUrl: process.env.EMBEDDING_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta',
+    model: process.env.EMBEDDING_MODEL || 'gemini-embedding-001',
+    dimension: parseInt(process.env.EMBEDDING_DIMENSION || '768', 10),
+    maxBatchSize: 100 // API safety batch limit per request
   };
 };
