@@ -9,6 +9,7 @@ const connectionString = process.env.DATABASE_URL || 'postgres://postgres:postgr
 
 export const pool = new Pool({
   connectionString,
+  ssl: connectionString.includes('localhost') ? false : { rejectUnauthorized: false },
   max: 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,

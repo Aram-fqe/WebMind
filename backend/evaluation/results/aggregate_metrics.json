@@ -1,0 +1,78 @@
+{
+  "totalEvaluated": 33,
+  "successfulQuestions": 33,
+  "failedEvaluations": 2,
+  "rateLimitFailures": 0,
+  "otherFailures": 2,
+  "recallAt5": "93.10%",
+  "abstentionAccuracy": "100.00%",
+  "truncatedAnswers": 0,
+  "latency": {
+    "averageMs": "2833.06",
+    "medianMs": "2387.00",
+    "minMs": 2068,
+    "maxMs": 10937
+  },
+  "recallMisses": [
+    {
+      "questionId": 10,
+      "question": "How does a strain gauge convert mechanical deformation into an electrical signal?",
+      "expectedChunkIds": [
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-3"
+      ],
+      "retrievedTop5": [
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-0",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-7",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-4",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-17",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-2"
+      ],
+      "similarityScores": [
+        0.7366,
+        0.666,
+        0.7357,
+        0.7017,
+        0.708
+      ],
+      "relevanceScores": [
+        0.76152116,
+        0.7135319,
+        0.6625569,
+        0.58465123,
+        0.48908922
+      ],
+      "retrievedAtAll": false
+    },
+    {
+      "questionId": 20,
+      "question": "Why are thermocouples preferred over RTDs in very high temperature applications?",
+      "expectedChunkIds": [
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-43"
+      ],
+      "retrievedTop5": [
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-20",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-10",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-11",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-21",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-15"
+      ],
+      "similarityScores": [
+        0.7129,
+        0.6825,
+        0.6925,
+        0.6922,
+        0.6826
+      ],
+      "relevanceScores": [
+        0.71687365,
+        0.6882385,
+        0.680136,
+        0.6077801,
+        0.542161
+      ],
+      "retrievedAtAll": false
+    }
+  ],
+  "answerCorrectness": "Not automatically calculated. Preserved existing methodology (manual evaluation required).",
+  "groundedness": "Not automatically calculated. Preserved existing methodology (manual evaluation required)."
+}

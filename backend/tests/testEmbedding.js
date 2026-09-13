@@ -9,7 +9,7 @@ async function runEmbeddingTests() {
   const config = getEmbeddingConfig();
   console.log(`[CONFIG CHECK] Default Embedding Model:     ${config.model}`);
   console.log(`[CONFIG CHECK] Expected Vector Dimension:  ${config.dimension}`);
-  console.log(`[CONFIG CHECK] OPENAI_API_KEY Configured:  ${config.apiKey ? 'YES (Masked)' : 'NO'}\n`);
+  console.log(`[CONFIG CHECK] GEMINI_API_KEY Configured:  ${config.apiKey ? 'YES (Masked)' : 'NO'}\n`);
 
   // Test 1: Validation for empty inputs
   console.log('[TEST 1] Testing empty input array handling...');
@@ -29,8 +29,8 @@ async function runEmbeddingTests() {
     'Cheerio extracts text clean of HTML boilerplate tags.'
   ];
 
-  if (!config.apiKey || config.apiKey === 'your_openai_api_key_here') {
-    console.log('ℹ OPENAI_API_KEY not set or is placeholder. Testing mock vector structure & error handling...');
+  if (!config.apiKey || config.apiKey === 'your_gemini_api_key_here') {
+    console.log('ℹ GEMINI_API_KEY not set or is placeholder. Testing mock vector structure & error handling...');
     try {
       await service.generateEmbeddings(sampleSentences);
     } catch (err) {
@@ -39,15 +39,15 @@ async function runEmbeddingTests() {
 
     // Verify dimension configuration contract matching PostgreSQL pgvector column
     console.log('[TEST 3] Verifying Configured Vector Dimension matches PostgreSQL schema...');
-    if (config.dimension === 1536) {
-      console.log('✓ Passed! Embedding dimension (1536) matches document_chunks.embedding vector(1536) column.\n');
+    if (config.dimension === 768) {
+      console.log('✓ Passed! Embedding dimension (768) matches document_chunks.embedding vector(768) column.\n');
     } else {
-      console.error(`✗ Dimension mismatch! Configured ${config.dimension} != 1536 pgvector column.\n`);
+      console.error(`✗ Dimension mismatch! Configured ${config.dimension} != 768 pgvector column.\n`);
     }
 
   } else {
     try {
-      console.log(`Sending ${sampleSentences.length} sentences to OpenAI API model '${config.model}'...`);
+      console.log(`Sending ${sampleSentences.length} sentences to Gemini API model '${config.model}'...`);
       const vectors = await service.generateEmbeddings(sampleSentences);
 
       console.log(`✓ Received ${vectors.length} embedding vectors.`);
@@ -68,8 +68,8 @@ async function runEmbeddingTests() {
 
       // Test 3: Verify vector dimension matches PostgreSQL column setting
       console.log('[TEST 3] Verifying Vector Dimension matches PostgreSQL pgvector column...');
-      if (config.dimension === 1536 && vectors[0].length === 1536) {
-        console.log('✓ Passed! Returned vector dimension (1536) matches PostgreSQL vector(1536) column.\n');
+      if (config.dimension === 768 && vectors[0].length === 768) {
+        console.log('✓ Passed! Returned vector dimension (768) matches PostgreSQL vector(768) column.\n');
       } else {
         console.error(`✗ Mismatch detected between returned dimension and pgvector schema.\n`);
       }

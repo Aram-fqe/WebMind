@@ -41,7 +41,7 @@ const NOT_ENOUGH_INFO_ANSWER =
  */
 export async function ask(question, options = {}) {
   const topK = options.topK || 5;
-  const startTime = Date.now();
+  const startTime = performance.now();
 
   // ── Input validation ──────────────────────────────────────────────────
   if (!question || typeof question !== 'string' || !question.trim()) {
@@ -67,6 +67,7 @@ export async function ask(question, options = {}) {
   }
 
   const chunks = retrieval.results;
+  const timings = retrieval.timings || {};
 
   // ── Step 2: Relevance gate ────────────────────────────────────────────
   // If no chunks were returned, or every chunk is below the similarity
@@ -74,7 +75,8 @@ export async function ask(question, options = {}) {
   // answer without grounding context.
   if (chunks.length === 0) {
     logger.warn(TAG, `[2/3] No chunks retrieved — returning safe response`);
-    const response = { answer: NOT_ENOUGH_INFO_ANSWER, sources: [] };
+    timings.total_latency_ms = performance.now() - startTime;
+    const response = { answer: NOT_ENOUGH_INFO_ANSWER, sources: [], timings };
     // Log for evaluation (fire-and-forget)
     logAskRequest({
       question: cleanQuestion,
@@ -102,9 +104,11 @@ export async function ask(question, options = {}) {
       source_url: c.source_url,
       chunk_index: c.chunk_index,
       similarity_score: c.similarity_score,
+      relevance_score: c.relevance_score,
       text_preview: c.chunk_text.substring(0, 150) + (c.chunk_text.length > 150 ? '...' : ''),
     }));
-    const response = { answer: NOT_ENOUGH_INFO_ANSWER, sources };
+    timings.total_latency_ms = performance.now() - startTime;
+    const response = { answer: NOT_ENOUGH_INFO_ANSWER, sources, timings };
     // Log for evaluation (fire-and-forget)
     logAskRequest({
       question: cleanQuestion,
@@ -150,6 +154,14 @@ export async function ask(question, options = {}) {
     latency_ms: Date.now() - startTime,
   });
 
+  if (result.timings) {
+    timings.context_build_latency_ms = result.timings.context_build_latency_ms;
+    timings.generation_latency_ms = result.timings.generation_latency_ms;
+  }
+  timings.total_latency_ms = performance.now() - startTime;
+  result.timings = timings;
+  result.usage = result.usage || {};
+  result.finish_reason = result.finish_reason || null;
+  
   return result;
 }
-

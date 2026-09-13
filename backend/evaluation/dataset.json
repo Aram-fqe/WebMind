@@ -1,0 +1,502 @@
+{
+  "version": "1.0",
+  "description": "WebMind Phase 1 evaluation benchmark — 35 technical questions across 5 instrumentation/electronics Wikipedia pages",
+  "created_at": "2026-09-13T13:00:00Z",
+  "sources": [
+    {
+      "id": "lvdt",
+      "url": "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer",
+      "title": "Linear variable differential transformer - Wikipedia",
+      "topic": "LVDT / Linear Variable Differential Transformer",
+      "ingested": false
+    },
+    {
+      "id": "strain-gauge",
+      "url": "https://en.wikipedia.org/wiki/Strain_gauge",
+      "title": "Strain gauge - Wikipedia",
+      "topic": "Strain Gauge",
+      "ingested": false
+    },
+    {
+      "id": "thermocouple",
+      "url": "https://en.wikipedia.org/wiki/Thermocouple",
+      "title": "Thermocouple - Wikipedia",
+      "topic": "Thermocouple",
+      "ingested": false
+    },
+    {
+      "id": "adc",
+      "url": "https://en.wikipedia.org/wiki/Analog-to-digital_converter",
+      "title": "Analog-to-digital converter - Wikipedia",
+      "topic": "ADC / Analog-to-Digital Converter",
+      "ingested": false
+    },
+    {
+      "id": "spi",
+      "url": "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface",
+      "title": "Serial Peripheral Interface - Wikipedia",
+      "topic": "SPI / Serial Communication Protocols",
+      "ingested": false
+    }
+  ],
+  "question_types": {
+    "direct": "Answer is stated explicitly in the text",
+    "definition": "Asks for the meaning or definition of a concept or term",
+    "relationship": "Asks how two concepts relate, interact, or what mechanism links them",
+    "specific": "Asks for a specific value, unit, range, formula, or technical parameter",
+    "comparison": "Asks to compare or contrast two or more items",
+    "reasoning": "Asks for a reason, application, or engineering justification",
+    "unanswerable": "Answer is NOT present in the ingested content — system should abstain"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "source": "lvdt",
+      "question": "What type of sensor is an LVDT?",
+      "expectedAnswer": "An LVDT is an electromechanical sensor that converts rectilinear (linear) displacement or position into a proportional electrical signal. It is a type of position sensor used to measure linear displacement.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1"
+      ],
+      "questionType": "direct"
+    },
+    {
+      "id": 2,
+      "source": "lvdt",
+      "question": "What does LVDT stand for?",
+      "expectedAnswer": "LVDT stands for Linear Variable Differential Transformer.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-7"
+      ],
+      "questionType": "definition"
+    },
+    {
+      "id": 3,
+      "source": "lvdt",
+      "question": "How does the movement of the core in an LVDT produce an output signal?",
+      "expectedAnswer": "The LVDT has a primary coil and two secondary coils wound on a cylindrical form. When AC excitation is applied to the primary coil, it induces voltages in the two secondary coils. As the ferromagnetic core moves linearly through the coils, the mutual inductance between the primary and each secondary changes, causing the differential voltage output to vary proportionally with core displacement.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-3"
+      ],
+      "questionType": "relationship"
+    },
+    {
+      "id": 4,
+      "source": "lvdt",
+      "question": "How many coils does an LVDT typically have and what are they called?",
+      "expectedAnswer": "An LVDT typically has three coils: one primary coil and two secondary coils. The secondary coils are connected in series opposition (reverse series).",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2"
+      ],
+      "questionType": "specific"
+    },
+    {
+      "id": 5,
+      "source": "lvdt",
+      "question": "What is the difference between an LVDT and an RVDT?",
+      "expectedAnswer": "An LVDT measures linear (rectilinear) displacement, while an RVDT (Rotary Variable Differential Transformer) measures angular (rotary) displacement. Both use the same differential transformer principle, but the RVDT is designed for rotational measurement.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6"
+      ],
+      "questionType": "comparison"
+    },
+    {
+      "id": 6,
+      "source": "lvdt",
+      "question": "Why is an LVDT considered to have theoretically infinite resolution?",
+      "expectedAnswer": "Because an LVDT operates on electromagnetic coupling principles with no physical contact between the core and the coils, there is no friction or mechanical wear. The output varies continuously and smoothly with core position, with no discrete steps, giving it theoretically infinite resolution limited only by the external electronics used to measure the output.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1"
+      ],
+      "questionType": "reasoning"
+    },
+    {
+      "id": 7,
+      "source": "lvdt",
+      "question": "What is the maximum sampling rate of a typical LVDT sensor?",
+      "expectedAnswer": "The provided sources do not contain enough information to answer this question. The Wikipedia article on LVDT does not specify a maximum sampling rate.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [],
+      "questionType": "unanswerable"
+    },
+    {
+      "id": 8,
+      "source": "strain-gauge",
+      "question": "What physical quantity does a strain gauge measure?",
+      "expectedAnswer": "A strain gauge measures strain — the deformation (dimensional change) of an object when a force is applied to it. It converts mechanical deformation into a change in electrical resistance.",
+      "expectedSource": "strain-gauge",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-0",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-10",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-16",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-17"
+      ],
+      "questionType": "direct"
+    },
+    {
+      "id": 9,
+      "source": "strain-gauge",
+      "question": "What is the gauge factor of a strain gauge?",
+      "expectedAnswer": "The gauge factor (GF) is the ratio of relative change in electrical resistance to the mechanical strain (relative change in length). It is defined as GF = (ΔR/R) / (ΔL/L) = (ΔR/R) / ε, where ε is the strain. For metallic foil strain gauges, the gauge factor is typically around 2.",
+      "expectedSource": "strain-gauge",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-3",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-4"
+      ],
+      "questionType": "definition"
+    },
+    {
+      "id": 10,
+      "source": "strain-gauge",
+      "question": "How does a strain gauge convert mechanical deformation into an electrical signal?",
+      "expectedAnswer": "A strain gauge consists of a thin metallic foil or wire pattern bonded to a flexible backing. When the surface it is attached to deforms, the gauge deforms with it, causing its electrical resistance to change. This resistance change is proportional to the strain and is typically measured using a Wheatstone bridge circuit, which converts the small resistance change into a measurable voltage output.",
+      "expectedSource": "strain-gauge",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-3"
+      ],
+      "questionType": "relationship"
+    },
+    {
+      "id": 11,
+      "source": "strain-gauge",
+      "question": "What is a typical gauge factor value for metallic foil strain gauges?",
+      "expectedAnswer": "A typical gauge factor for metallic foil strain gauges is approximately 2. Semiconductor (piezoresistive) strain gauges can have gauge factors of 100 or more, but are more sensitive to temperature changes.",
+      "expectedSource": "strain-gauge",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-4"
+      ],
+      "questionType": "specific"
+    },
+    {
+      "id": 12,
+      "source": "strain-gauge",
+      "question": "How do metallic strain gauges compare with semiconductor strain gauges?",
+      "expectedAnswer": "Metallic (foil) strain gauges have a lower gauge factor (typically around 2) but are more stable with temperature and have more linear response. Semiconductor (piezoresistive) strain gauges have much higher gauge factors (up to 100 or more), providing greater sensitivity, but they are more affected by temperature variations and tend to have a more nonlinear response.",
+      "expectedSource": "strain-gauge",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-15"
+      ],
+      "questionType": "comparison"
+    },
+    {
+      "id": 13,
+      "source": "strain-gauge",
+      "question": "Why is a Wheatstone bridge circuit used with strain gauges?",
+      "expectedAnswer": "A Wheatstone bridge is used because strain gauges produce very small changes in resistance (typically fractions of an ohm). The Wheatstone bridge circuit is highly sensitive to small resistance changes and can convert them into measurable voltage differences. It also provides temperature compensation when configured as a half-bridge or full-bridge with multiple active gauges.",
+      "expectedSource": "strain-gauge",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-0",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-4",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-6",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-7",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-8",
+        "https://en.wikipedia.org/wiki/Strain_gauge#chunk-13"
+      ],
+      "questionType": "reasoning"
+    },
+    {
+      "id": 14,
+      "source": "strain-gauge",
+      "question": "What is the fatigue life in cycles of a standard bonded foil strain gauge?",
+      "expectedAnswer": "The provided sources do not contain enough information to answer this question. The Wikipedia article on strain gauges does not specify a fatigue life in cycles.",
+      "expectedSource": "strain-gauge",
+      "relevantChunkIds": [],
+      "questionType": "unanswerable"
+    },
+    {
+      "id": 15,
+      "source": "thermocouple",
+      "question": "What physical effect do thermocouples use to measure temperature?",
+      "expectedAnswer": "Thermocouples use the Seebeck effect (thermoelectric effect) to measure temperature. When two dissimilar metals are joined at one end and there is a temperature difference between the junction and the other end, a voltage (electromotive force, or EMF) is generated that is proportional to the temperature difference.",
+      "expectedSource": "thermocouple",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-1"
+      ],
+      "questionType": "direct"
+    },
+    {
+      "id": 16,
+      "source": "thermocouple",
+      "question": "What is the Seebeck effect?",
+      "expectedAnswer": "The Seebeck effect is a thermoelectric phenomenon where a voltage (electromotive force) is produced when two different metals or semiconductors are joined at two junctions and the junctions are held at different temperatures. It was discovered by Thomas Johann Seebeck and is the operating principle behind thermocouples.",
+      "expectedSource": "thermocouple",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-1"
+      ],
+      "questionType": "definition"
+    },
+    {
+      "id": 17,
+      "source": "thermocouple",
+      "question": "How does the temperature difference between the hot junction and cold junction produce a measurable voltage in a thermocouple?",
+      "expectedAnswer": "In a thermocouple, two wires of dissimilar metals are joined at the measurement point (hot junction). The other ends connect to the measuring instrument (cold/reference junction). Because the two metals have different Seebeck coefficients, a net voltage is generated that depends on the temperature difference between the two junctions. This voltage can be measured and correlated to the temperature at the hot junction using standard reference tables.",
+      "expectedSource": "thermocouple",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-2",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-5",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-6",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-7",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-12",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-13"
+      ],
+      "questionType": "relationship"
+    },
+    {
+      "id": 18,
+      "source": "thermocouple",
+      "question": "What is the approximate temperature range of a Type K thermocouple?",
+      "expectedAnswer": "A Type K thermocouple (chromel–alumel) has an approximate useful temperature range of −200 °C to +1250 °C (or approximately −270 °C to 1372 °C depending on the source and application conditions).",
+      "expectedSource": "thermocouple",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-14"
+      ],
+      "questionType": "specific"
+    },
+    {
+      "id": 19,
+      "source": "thermocouple",
+      "question": "How does a Type K thermocouple compare with a Type J thermocouple?",
+      "expectedAnswer": "Type K (chromel–alumel) and Type J (iron–constantan) thermocouples differ in their metal composition and temperature ranges. Type K has a wider temperature range (up to about 1250 °C) and better oxidation resistance at high temperatures. Type J has a smaller temperature range (up to about 760 °C) and the iron wire is susceptible to oxidation and corrosion. Type J has a slightly higher Seebeck coefficient (about 50–55 µV/°C vs ~41 µV/°C for Type K).",
+      "expectedSource": "thermocouple",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-6",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-9",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-13",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-16",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-17",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-20",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-21",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-22",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-28",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-29",
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-40"
+      ],
+      "questionType": "comparison"
+    },
+    {
+      "id": 20,
+      "source": "thermocouple",
+      "question": "Why are thermocouples preferred over RTDs in very high temperature applications?",
+      "expectedAnswer": "Thermocouples can operate at much higher temperatures (some types up to 2300 °C) compared to RTDs which are typically limited to around 600–850 °C. Thermocouples are also more rugged, have faster response times, and are less expensive, making them the preferred choice for extreme temperature environments such as furnaces, kilns, and exhaust gas monitoring.",
+      "expectedSource": "thermocouple",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Thermocouple#chunk-43"
+      ],
+      "questionType": "reasoning"
+    },
+    {
+      "id": 21,
+      "source": "thermocouple",
+      "question": "What is the self-heating error specification in milliwatts for a Type K thermocouple?",
+      "expectedAnswer": "The provided sources do not contain enough information to answer this question. The Wikipedia article on thermocouples does not discuss self-heating error specifications in milliwatts.",
+      "expectedSource": "thermocouple",
+      "relevantChunkIds": [],
+      "questionType": "unanswerable"
+    },
+    {
+      "id": 22,
+      "source": "adc",
+      "question": "What does an analog-to-digital converter do?",
+      "expectedAnswer": "An analog-to-digital converter (ADC) converts a continuous analog signal (such as a voltage) into a discrete digital number (binary representation) that can be processed by digital systems. It samples the analog input at regular intervals and quantizes the measured values into digital codes.",
+      "expectedSource": "adc",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-1",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-2"
+      ],
+      "questionType": "direct"
+    },
+    {
+      "id": 23,
+      "source": "adc",
+      "question": "What is quantization in the context of analog-to-digital conversion?",
+      "expectedAnswer": "Quantization is the process of mapping a continuous range of analog input values to a finite set of discrete digital output values. It introduces a quantization error because the continuous signal is approximated by the nearest discrete level. The resolution (number of bits) determines how many discrete levels are available.",
+      "expectedSource": "adc",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-1",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-2"
+      ],
+      "questionType": "definition"
+    },
+    {
+      "id": 24,
+      "source": "adc",
+      "question": "How does the number of bits in an ADC relate to its resolution?",
+      "expectedAnswer": "The number of bits determines the number of discrete output levels an ADC can produce: a N-bit ADC has 2^N quantization levels. Higher bit count means finer resolution and smaller quantization steps, allowing the ADC to distinguish smaller changes in the analog input. For example, an 8-bit ADC has 256 levels, while a 16-bit ADC has 65,536 levels.",
+      "expectedSource": "adc",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-3"
+      ],
+      "questionType": "relationship"
+    },
+    {
+      "id": 25,
+      "source": "adc",
+      "question": "What is the resolution in voltage of a 12-bit ADC with a 5V reference?",
+      "expectedAnswer": "A 12-bit ADC with a 5V reference has a resolution of 5V / 2^12 = 5V / 4096 ≈ 1.22 mV per step (least significant bit).",
+      "expectedSource": "adc",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-2",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-3",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-4",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-5",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-6",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-7",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-8",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-15",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-17",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-19",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-24",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-25",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-29"
+      ],
+      "questionType": "specific"
+    },
+    {
+      "id": 26,
+      "source": "adc",
+      "question": "How does a successive-approximation ADC compare with a flash ADC?",
+      "expectedAnswer": "A flash ADC uses an array of comparators (2^N - 1 for N bits) to simultaneously compare the input against all reference levels, making it extremely fast but very expensive in hardware for high resolutions. A successive-approximation register (SAR) ADC uses a single comparator and a DAC in a binary search algorithm, testing one bit at a time from MSB to LSB. SAR ADCs are slower than flash ADCs but require far less hardware and consume less power, making them more practical for high-resolution applications.",
+      "expectedSource": "adc",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-12",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-13"
+      ],
+      "questionType": "comparison"
+    },
+    {
+      "id": 27,
+      "source": "adc",
+      "question": "Why must the sampling rate of an ADC be at least twice the highest frequency component in the input signal?",
+      "expectedAnswer": "According to the Nyquist–Shannon sampling theorem, the sampling rate must be at least twice the highest frequency component in the analog signal to accurately reconstruct the original signal from its samples. If the sampling rate is lower (undersampling), aliasing occurs — higher frequency components are incorrectly represented as lower frequencies, distorting the digitized signal.",
+      "expectedSource": "adc",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-9",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-10",
+        "https://en.wikipedia.org/wiki/Analog-to-digital_converter#chunk-11"
+      ],
+      "questionType": "reasoning"
+    },
+    {
+      "id": 28,
+      "source": "adc",
+      "question": "What is the typical power consumption in milliwatts of a 24-bit sigma-delta ADC at 1 MSPS?",
+      "expectedAnswer": "The provided sources do not contain enough information to answer this question. The Wikipedia article on ADC does not specify power consumption figures for specific ADC products or configurations.",
+      "expectedSource": "adc",
+      "relevantChunkIds": [],
+      "questionType": "unanswerable"
+    },
+    {
+      "id": 29,
+      "source": "spi",
+      "question": "What type of communication interface is SPI?",
+      "expectedAnswer": "SPI (Serial Peripheral Interface) is a synchronous serial communication interface specification used for short-distance communication, primarily in embedded systems. It uses a master-slave architecture with full-duplex communication using separate MOSI and MISO data lines.",
+      "expectedSource": "spi",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-0",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-1"
+      ],
+      "questionType": "direct"
+    },
+    {
+      "id": 30,
+      "source": "spi",
+      "question": "What is full-duplex communication in the context of SPI?",
+      "expectedAnswer": "Full-duplex communication means that data can be transmitted and received simultaneously in both directions at the same time. In SPI, full-duplex is achieved using two separate data lines: MOSI (Master Out Slave In) for data from master to slave, and MISO (Master In Slave Out) for data from slave to master. Both lines transfer data simultaneously, clocked by the shared SCLK signal.",
+      "expectedSource": "spi",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-0",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-3",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-13",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-18",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-24"
+      ],
+      "questionType": "definition"
+    },
+    {
+      "id": 31,
+      "source": "spi",
+      "question": "What are the four standard signal lines used in SPI communication?",
+      "expectedAnswer": "The four standard SPI signal lines are: SCLK (Serial Clock) — clock signal generated by the master; MOSI (Master Out Slave In) — data line from master to slave; MISO (Master In Slave Out) — data line from slave to master; and SS/CS (Slave Select / Chip Select) — active-low signal to select the target slave device.",
+      "expectedSource": "spi",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-0",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-1",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-2",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-3",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-5",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-6",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-7",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-8",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-9",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-17",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-18",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-26",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-27"
+      ],
+      "questionType": "specific"
+    },
+    {
+      "id": 32,
+      "source": "spi",
+      "question": "How does the master select which slave device to communicate with in SPI?",
+      "expectedAnswer": "The master uses dedicated Slave Select (SS) or Chip Select (CS) lines — one per slave device. To communicate with a specific slave, the master drives that slave's SS/CS line low (active-low), while keeping all other SS/CS lines high. Only the selected slave responds to clock and data signals. This requires N separate SS lines for N slave devices.",
+      "expectedSource": "spi",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-0",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-1",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-4",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-5",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-10",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-16",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-26",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-27",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-28",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-29"
+      ],
+      "questionType": "relationship"
+    },
+    {
+      "id": 33,
+      "source": "spi",
+      "question": "How does SPI compare with I2C in terms of speed and wiring complexity?",
+      "expectedAnswer": "SPI is generally faster than I2C because it uses separate dedicated data lines (full-duplex) and has no protocol overhead for addressing. SPI clock speeds can reach tens of MHz or higher. However, SPI requires more wires — 4 lines plus one additional CS line per slave device, while I2C uses only 2 wires (SDA, SCL) regardless of the number of devices, using device addresses instead of dedicated select lines. SPI is preferred for high-speed data transfer, while I2C is preferred when pin count must be minimized.",
+      "expectedSource": "spi",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-10",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-11",
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-30"
+      ],
+      "questionType": "comparison"
+    },
+    {
+      "id": 34,
+      "source": "spi",
+      "question": "Why does SPI not have a built-in acknowledgment mechanism like I2C?",
+      "expectedAnswer": "SPI was designed as a simple, high-speed, hardware-level interface with minimal protocol overhead. It operates with direct point-to-point connections via chip select lines rather than addressed communication. Because the master directly selects each slave via a dedicated SS line and clocks data in and out simultaneously, there is no need for an ACK/NACK handshaking mechanism. This lack of acknowledgment simplifies the hardware and increases throughput, but means the master has no built-in way to confirm that a slave received data correctly.",
+      "expectedSource": "spi",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#chunk-12"
+      ],
+      "questionType": "reasoning"
+    },
+    {
+      "id": 35,
+      "source": "spi",
+      "question": "What is the maximum cable length specification for SPI communication defined in the SPI standard?",
+      "expectedAnswer": "The provided sources do not contain enough information to answer this question. SPI does not have a formal maximum cable length specification — it was originally designed for communication between ICs on the same circuit board, and no formal standard body defines SPI cable length limits.",
+      "expectedSource": "spi",
+      "relevantChunkIds": [],
+      "questionType": "unanswerable"
+    }
+  ]
+}

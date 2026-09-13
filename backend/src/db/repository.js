@@ -62,7 +62,7 @@ export async function saveChunks(webpageId, chunks) {
  * Performs semantic vector similarity search using cosine distance (<=>).
  * Returns chunks with calculated similarity_score = (1 - cosine_distance).
  * 
- * @param {number[]} queryVector - 1536-dimensional embedding vector
+ * @param {number[]} queryVector - 768-dimensional embedding vector
  * @param {Object} [options]
  * @param {number} [options.limit=5] - Number of top chunks to retrieve (Top-K)
  * @param {string} [options.sourceUrl] - Optional URL filter

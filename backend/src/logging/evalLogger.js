@@ -52,6 +52,7 @@ export async function logAskRequest(entry) {
         chunk_id: s.chunk_id,
         chunk_index: s.chunk_index,
         similarity_score: s.similarity_score,
+        relevance_score: s.relevance_score,
       })),
       retrieval_count: entry.retrieval_count ?? 0,
       relevant_count: entry.relevant_count ?? 0,

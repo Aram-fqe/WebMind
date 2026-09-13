@@ -66,7 +66,9 @@ export async function searchSimilarChunks(queryText, topK = 5) {
   // ingestion is reused here so query and document vectors live in the same
   // vector space — a requirement for cosine similarity to be meaningful.
   logger.info(TAG, `[1/3] Generating query embedding...`);
+  const t0 = performance.now();
   const [queryVector] = await embeddingService.generateEmbeddings([cleanQuery]);
+  const t1 = performance.now();
 
   if (!queryVector || queryVector.length === 0) {
     throw new Error('[RetrievalService] Failed to generate embedding for query.');
@@ -87,6 +89,7 @@ export async function searchSimilarChunks(queryText, topK = 5) {
   const candidateCount = topK * 3;
   logger.info(TAG, `[2/3] Searching pgvector for top ${candidateCount} candidates...`);
   const candidates = await dbSearchSimilarChunks(queryVector, { limit: candidateCount });
+  const t2 = performance.now();
 
   logger.info(TAG, `[2/3] Vector search complete — ${candidates.length} candidates retrieved`);
   candidates.forEach((chunk, i) => {
@@ -103,6 +106,7 @@ export async function searchSimilarChunks(queryText, topK = 5) {
   // semantic relevance, producing much better ordering than cosine alone.
   logger.info(TAG, `[3/3] Reranking candidates with Cohere...`);
   const reranked = await rerankChunks(cleanQuery, candidates, { topN: topK });
+  const t3 = performance.now();
 
   logger.info(TAG, `[3/3] Reranking complete — ${reranked.length} chunks selected`);
 
@@ -122,5 +126,10 @@ export async function searchSimilarChunks(queryText, topK = 5) {
     topK,
     results_count: shaped.length,
     results: shaped,
+    timings: {
+      embedding_latency_ms: t1 - t0,
+      retrieval_latency_ms: t2 - t1,
+      rerank_latency_ms: t3 - t2,
+    }
   };
 }

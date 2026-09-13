@@ -22,10 +22,10 @@ async function runDatabaseTests() {
     const webpageId = await upsertWebpage(testPage);
     console.log(`✓ Passed! Webpage saved with ID: ${webpageId}\n`);
 
-    // 3. Test chunk insertion with synthetic 1536-dim vector embeddings
+    // 3. Test chunk insertion with synthetic 768-dim vector embeddings
     console.log('[TEST 3] Testing Chunk & Vector Insertion...');
-    const dummyVector1 = new Array(1536).fill(0.1);
-    const dummyVector2 = new Array(1536).fill(0.2);
+    const dummyVector1 = new Array(768).fill(0.1);
+    const dummyVector2 = new Array(768).fill(0.2);
 
     const testChunks = [
       {
@@ -47,11 +47,11 @@ async function runDatabaseTests() {
     ];
 
     const savedChunks = await saveChunks(webpageId, testChunks);
-    console.log(`✓ Passed! Saved ${savedChunks.length} chunks with 1536-dimensional embeddings.\n`);
+    console.log(`✓ Passed! Saved ${savedChunks.length} chunks with 768-dimensional embeddings.\n`);
 
     // 4. Test vector similarity search (<=>)
     console.log('[TEST 4] Testing Top-K Cosine Similarity Search (<=>)...');
-    const queryVector = new Array(1536).fill(0.105); // Close to vector1
+    const queryVector = new Array(768).fill(0.105); // Close to vector1
     const searchResults = await searchSimilarChunks(queryVector, { limit: 2 });
     
     console.log(`Retrieved ${searchResults.length} top matching chunks:`);
@@ -59,7 +59,7 @@ async function runDatabaseTests() {
       console.log(`  Match ${idx + 1}:`);
       console.log(`    Chunk ID:          ${match.chunk_id}`);
       console.log(`    Similarity Score:  ${match.similarity_score}`);
-      console.log(`    Text:              "${match.text}"`);
+      console.log(`    Text:              "${match.chunk_text || match.text}"`);
     });
 
     if (searchResults.length > 0 && searchResults[0].similarity_score > 0.95) {

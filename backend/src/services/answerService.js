@@ -94,17 +94,20 @@ export async function generateAnswer(question, chunks) {
   });
 
   // ── Build prompt ──────────────────────────────────────────────────────
+  const t0 = performance.now();
   const userPrompt = buildUserPrompt(cleanQuestion, chunks);
+  const t1 = performance.now();
 
   logger.info(TAG, `Prompt constructed`, {
     user_prompt_length: userPrompt.length,
   });
 
   // ── LLM call ──────────────────────────────────────────────────────────
-  const { text: answer, usage } = await llmClient.chatCompletion(
+  const { text: answer, usage, finish_reason } = await llmClient.chatCompletion(
     SYSTEM_PROMPT,
     userPrompt,
   );
+  const t2 = performance.now();
 
   logger.info(TAG, `Answer generated`, {
     answer_length: answer.length,
@@ -121,8 +124,18 @@ export async function generateAnswer(question, chunks) {
     source_url: chunk.source_url,
     chunk_index: chunk.chunk_index,
     similarity_score: chunk.similarity_score,
+    relevance_score: chunk.relevance_score,
     text_preview: chunk.chunk_text.substring(0, 150) + (chunk.chunk_text.length > 150 ? '...' : ''),
   }));
 
-  return { answer, sources };
+  return { 
+    answer, 
+    sources, 
+    usage,
+    finish_reason,
+    timings: { 
+      context_build_latency_ms: t1 - t0, 
+      generation_latency_ms: t2 - t1 
+    } 
+  };
 }

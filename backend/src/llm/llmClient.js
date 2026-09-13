@@ -23,6 +23,7 @@ export class LlmClient {
       this.openai = new OpenAI({
         apiKey: config.apiKey,
         baseURL: config.baseUrl,
+        maxRetries: 0,
       });
     } else {
       this.openai = null;
@@ -81,7 +82,7 @@ export class LlmClient {
         total_tokens: usage.total_tokens,
       });
 
-      return { text, usage };
+      return { text, usage, finish_reason: response.choices[0].finish_reason };
     } catch (err) {
       if (err.status === 429) {
         throw new Error(`[LlmClient] LLM provider rate limit exceeded (429): ${err.message}`);

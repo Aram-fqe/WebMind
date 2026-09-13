@@ -134,7 +134,7 @@ async function runTest() {
   console.log(`  URL            → ${result1.source_url}`);
   console.log(`  Title          → ${result1.title}`);
   console.log(`  Chunks stored  → ${result1.chunks_created} in document_chunks table`);
-  console.log(`  Embeddings     → vector(1536) in pgvector HNSW index`);
+  console.log(`  Embeddings     → vector(768) in pgvector HNSW index`);
   console.log(`  Re-ingest      → replaced cleanly, chunk count: ${result2.chunks_created}`);
 }
 
