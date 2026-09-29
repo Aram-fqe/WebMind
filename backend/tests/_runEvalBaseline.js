@@ -1,3 +1,20 @@
+/**
+ * DEPRECATED.
+ *
+ * This script produced the historical PARTIAL baseline in
+ * backend/evaluation/results/raw_results.json and aggregate_metrics.json
+ * (33/35 questions; questions 34 and 35 omitted from raw results).
+ *
+ * Do not use this file. Canonical runner:
+ *   cd backend && npm run eval
+ *
+ * Canonical dataset:
+ *   backend/evaluation/dataset.json
+ *
+ * This file is kept as a record of how the legacy numbers were generated.
+ * It is not an active metric implementation.
+ */
+
 import fs from 'fs';
 import path from 'path';
 

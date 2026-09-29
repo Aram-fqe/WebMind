@@ -1,111 +1,128 @@
 # WebMind Phase 1 — Evaluation Benchmark
 
-## Purpose
+Canonical evaluation lives in this directory. Do not use `backend/eval/dataset.json`.
 
-This benchmark evaluates the end-to-end quality of the WebMind RAG pipeline:
+## Pipeline under test
 
+```text
+Ingestion → Gemini embeddings (768-dim) → PostgreSQL pgvector
+→ cosine retrieval → Cohere rerank → Groq answer generation
 ```
-Ingestion → Gemini Embeddings (768-dim) → Supabase pgvector → Cosine Retrieval → Cohere Reranking → Groq Answer Generation
+
+## Canonical dataset
+
+**File:** `backend/evaluation/dataset.json`
+
+35 questions across 5 Wikipedia sources (7 types × 5 pages):
+
+| ID | Topic | URL |
+|---|---|---|
+| `lvdt` | LVDT | https://en.wikipedia.org/wiki/Linear_variable_differential_transformer |
+| `strain-gauge` | Strain gauge | https://en.wikipedia.org/wiki/Strain_gauge |
+| `thermocouple` | Thermocouple | https://en.wikipedia.org/wiki/Thermocouple |
+| `adc` | ADC | https://en.wikipedia.org/wiki/Analog-to-digital_converter |
+| `spi` | SPI | https://en.wikipedia.org/wiki/Serial_Peripheral_Interface |
+
+Question types: `direct`, `definition`, `relationship`, `specific`, `comparison`, `reasoning`, `unanswerable` (one of each per source).
+
+Gold `relevantChunkIds` are a snapshot of chunk IDs from a prior ingest (`{url}#chunk-{index}`). Do not invent or rewrite them. Re-ingestion can change those IDs.
+
+The placeholder file `backend/eval/dataset.json` is **deprecated** and is not used by the runner.
+
+## Required order
+
+The server must be running (`npm run dev` or `npm start` from `backend/`).
+
+```bash
+cd backend
+npm run eval:ingest    # once, or when sources must be (re)loaded
+npm run eval           # assumes pages are already ingested
 ```
 
-The goal is to measure **retrieval accuracy**, **answer correctness**, **groundedness**, **abstention quality**, and **latency** across a diverse set of technical questions grounded in real-world reference content.
+Equivalent:
 
----
+```bash
+node evaluation/ingestSources.js
+node evaluation/runEval.js
+```
 
-## Sources (5 Webpages)
+Optional filters:
 
-All sources are authoritative Wikipedia articles on instrumentation and electronics:
+```bash
+node evaluation/runEval.js --source lvdt
+node evaluation/runEval.js --type unanswerable
+```
 
-| # | ID | Topic | URL |
-|---|-----|-------|-----|
-| 1 | `lvdt` | LVDT / Linear Variable Differential Transformer | https://en.wikipedia.org/wiki/Linear_variable_differential_transformer |
-| 2 | `strain-gauge` | Strain Gauge | https://en.wikipedia.org/wiki/Strain_gauge |
-| 3 | `thermocouple` | Thermocouple | https://en.wikipedia.org/wiki/Thermocouple |
-| 4 | `adc` | ADC / Analog-to-Digital Converter | https://en.wikipedia.org/wiki/Analog-to-digital_converter |
-| 5 | `spi` | SPI / Serial Peripheral Interface | https://en.wikipedia.org/wiki/Serial_Peripheral_Interface |
+Environment (optional):
 
----
+- `PORT` — API port (default 3000)
+- `EVAL_DELAY_MS` — pause between questions (default 2000)
+- `EVAL_ASK_TIMEOUT_MS` — per-question timeout (default 120000)
 
-## Questions (35 Total)
+`npm run eval` **does not** ingest pages. Silent re-ingest during scoring would rewrite chunks and invalidate gold IDs.
 
-**7 questions per source** × **5 sources** = **35 questions**
+## Ingestion warning
 
-### Question Type Distribution
+`eval:ingest` calls the existing `POST /ingest` endpoint for each dataset source URL.
 
-| Type | Count | Description |
-|------|-------|-------------|
-| `direct` | 5 | Answer is stated explicitly in the source text |
-| `definition` | 5 | Asks for the meaning or definition of a concept |
-| `relationship` | 5 | Asks how two concepts relate or what mechanism links them |
-| `specific` | 5 | Asks for a specific value, unit, range, or technical parameter |
-| `comparison` | 5 | Asks to compare or contrast two or more items |
-| `reasoning` | 5 | Asks for a reason, application, or engineering justification |
-| `unanswerable` | 5 | Answer is **NOT** present in the source — system should abstain |
-
-Each source has exactly one question of each type.
-
----
-
-## `relevantChunkIds` — Why They Are Empty
-
-The `relevantChunkIds` field in each question is intentionally left as `[]`.
-
-**Reason:** Chunk IDs are deterministic but depend on the ingestion pipeline (URL + chunk index). They can only be populated **after** the 5 source pages are ingested into the database and the actual chunk boundaries are known.
-
-### Population Workflow
-
-1. Ingest all 5 source pages via `POST /ingest`
-2. Query the `document_chunks` table to retrieve actual `chunk_id` values
-3. For each question, identify which chunks contain the relevant answer text
-4. Update `relevantChunkIds` with the matching chunk IDs
-5. Run the evaluation
-
-This separation ensures the dataset structure is defined independently of the database state.
-
----
+Re-ingestion **replaces** chunks for that URL. If Wikipedia content or chunk boundaries change, gold `relevantChunkIds` can become wrong. After any re-ingest, inspect stored `chunk_id` values before treating Recall@5 as comparable to a previous run.
 
 ## Metrics
 
-The evaluation will compute the following metrics:
+### Recall@5 (binary, answerable successes only)
 
-### Retrieval Quality
-- **Recall@5** — Of the chunks containing the expected answer, what fraction appear in the top-5 retrieved chunks?
+A question is a **hit** if at least one gold `relevantChunkId` appears in the top-five retrieved `chunk_id` values from `/ask`.
 
-### Answer Quality
-- **Answer Correctness** — Does the generated answer match the expected answer in substance? (Manual or LLM-as-judge evaluation)
-- **Groundedness** — Is the answer grounded in the retrieved source chunks, or does it hallucinate information not present in the context?
+- Unanswerable questions are excluded.
+- Failed requests are excluded from the denominator and listed separately.
 
-### Abstention Quality
-- **Abstention Accuracy** — For `unanswerable` questions, does the system correctly refuse to answer instead of fabricating a response?
+### Abstention accuracy (unanswerable successes only)
 
-### Performance
-- **Latency** — Per-question and aggregate pipeline latency (embedding → retrieval → reranking → generation)
+Counted as correct when the generated answer matches a refusal phrase (for example “do not contain enough information”).
 
-### Breakdown
-- All metrics are broken down by `questionType` and by `source` to identify systematic weaknesses.
+- Failed unanswerable requests are excluded from the denominator.
 
----
+### Latency
 
-## File Structure
+Average, median, min, and max over **successful** requests only.
 
-```
-backend/evaluation/
-├── dataset.json       # 35-question benchmark dataset
-├── README.md          # This file
-└── results/           # (created at runtime) Evaluation run outputs
-```
+### Not scored automatically
 
----
+- Answer correctness — manual review
+- Groundedness — manual review
 
-## Usage
+### Complete vs partial
 
-### Pre-requisites
-1. All 5 source pages must be ingested first
-2. Server must be running (`npm run dev`)
+- **Complete:** every selected question has `success: true`. Only then is the run a complete evaluation of that set.
+- **Partial:** any HTTP, network, timeout, or rate-limit failure. Do **not** call a partial run a complete Phase 1 baseline.
 
-### Running the Evaluation
-```bash
-node eval/runEval.js
-```
+The runner always writes a row for every question, including failures with an `error` field. Exit code is `1` on a partial run.
 
-> **Note:** The evaluation runner currently reads from `eval/dataset.json`. It may need to be updated to read from `evaluation/dataset.json` or the evaluation runner may be updated to work with the new dataset format.
+## Results location
+
+| Path | Role |
+|---|---|
+| `evaluation/results/runs/eval_<timestamp>.json` | New runs (raw rows + aggregates) |
+| `evaluation/results/raw_results.json` | **Legacy partial** historical artifact |
+| `evaluation/results/aggregate_metrics.json` | **Legacy partial** historical artifact |
+| `evaluation/results/LEGACY.md` | Explains the historical 33/35 run |
+
+New runs do not overwrite the legacy JSON files.
+
+## Failure handling
+
+Each result row includes `questionId`, `questionType`, `success`, `httpStatus`, `timedOut`, `rateLimited`, `error`, and `latencyMs` when measurable. Error text is sanitized so API keys are not written to disk.
+
+## Limitations and reproducibility
+
+- Live Wikipedia HTML can change extraction and chunk boundaries.
+- Gold chunk IDs are ingest-snapshot specific.
+- Gemini, Cohere, and Groq are live APIs; ranking and answers can vary.
+- Rate limits may produce a partial run unless `EVAL_DELAY_MS` is increased.
+- The historical baseline omitted questions 34 and 35 from raw results; the canonical runner does not omit failures.
+
+## Deprecated files
+
+- `backend/eval/dataset.json` — placeholder dataset; not canonical
+- `backend/eval/runEval.js` — prints a deprecation warning and forwards to this runner
+- `backend/tests/_runEvalBaseline.js` — produced the historical partial 33/35 baseline; do not use

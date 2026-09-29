@@ -1,0 +1,384 @@
+{
+  "run_at": "2026-09-29T08:37:32.893Z",
+  "dataset_path": "evaluation/dataset.json",
+  "dataset_version": "1.0",
+  "filters": {
+    "source": "lvdt",
+    "type": null
+  },
+  "server": "http://127.0.0.1:3000",
+  "summary": {
+    "runStatus": "complete",
+    "complete": true,
+    "note": "All selected questions executed successfully. This run may be treated as a complete evaluation of the selected set.",
+    "totalQuestions": 7,
+    "successfulQuestions": {
+      "numerator": 7,
+      "denominator": 7
+    },
+    "failedQuestions": {
+      "numerator": 0,
+      "denominator": 7
+    },
+    "answerableQuestions": 6,
+    "unanswerableQuestions": 1,
+    "rateLimitFailures": 0,
+    "timeoutFailures": 0,
+    "otherFailures": 0,
+    "truncatedAnswers": 0,
+    "recallAt5": {
+      "hits": 6,
+      "denominator": 6,
+      "percent": 100,
+      "definition": "Binary per-question hit: at least one gold relevantChunkId appears in the retrieved top-5 chunk IDs.",
+      "excludedUnanswerable": 1,
+      "excludedFailedAnswerable": 0,
+      "excludedFailedAnswerableNote": "Failed answerable questions are excluded from the Recall@5 denominator."
+    },
+    "abstentionAccuracy": {
+      "correct": 1,
+      "denominator": 1,
+      "percent": 100,
+      "excludedFailedUnanswerable": 0,
+      "excludedFailedUnanswerableNote": "Failed unanswerable questions are excluded from the abstention-accuracy denominator."
+    },
+    "latency": {
+      "included": "Successful requests only. Failed requests are excluded from latency aggregates.",
+      "count": 7,
+      "averageMs": 2750.86,
+      "medianMs": 2707,
+      "minMs": 2310,
+      "maxMs": 3438
+    },
+    "recallMisses": [],
+    "answerCorrectness": "Not automatically calculated. Manual review required.",
+    "groundedness": "Not automatically calculated. Manual review required."
+  },
+  "results": [
+    {
+      "questionId": 1,
+      "source": "lvdt",
+      "question": "What type of sensor is an LVDT?",
+      "questionType": "direct",
+      "expectedAnswer": "An LVDT is an electromechanical sensor that converts rectilinear (linear) displacement or position into a proportional electrical signal. It is a type of position sensor used to measure linear displacement.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1"
+      ],
+      "success": true,
+      "httpStatus": 200,
+      "timedOut": false,
+      "rateLimited": false,
+      "error": null,
+      "generatedAnswer": "An LVDT (linear variable differential transformer) is an electrical transformer used as an absolute linear position/displacement sensor (or transducer) to measure linear displacement or position along a given direction.",
+      "finishReason": "stop",
+      "retrievedChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-5",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-7"
+      ],
+      "similarityScores": [
+        0.7823,
+        0.7485,
+        0.7542,
+        0.7074,
+        0.736
+      ],
+      "relevanceScores": [
+        0.8993429,
+        0.81524754,
+        0.7593865,
+        0.6912478,
+        0.63452125
+      ],
+      "sourceUrls": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer"
+      ],
+      "latencyMs": 3438,
+      "abstained": false,
+      "recallAt5Hit": true,
+      "abstentionCorrect": null
+    },
+    {
+      "questionId": 2,
+      "source": "lvdt",
+      "question": "What does LVDT stand for?",
+      "questionType": "definition",
+      "expectedAnswer": "LVDT stands for Linear Variable Differential Transformer.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-7"
+      ],
+      "success": true,
+      "httpStatus": 200,
+      "timedOut": false,
+      "rateLimited": false,
+      "error": null,
+      "generatedAnswer": "LVDT stands for **linear variable differential transformer**, **linear variable displacement transformer**, or **linear variable displacement transducer**.",
+      "finishReason": "stop",
+      "retrievedChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-5",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-7"
+      ],
+      "similarityScores": [
+        0.7611,
+        0.7494,
+        0.6964,
+        0.734,
+        0.7154
+      ],
+      "relevanceScores": [
+        0.9123193,
+        0.7283819,
+        0.6241337,
+        0.62358373,
+        0.6097339
+      ],
+      "sourceUrls": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer"
+      ],
+      "latencyMs": 2468,
+      "abstained": false,
+      "recallAt5Hit": true,
+      "abstentionCorrect": null
+    },
+    {
+      "questionId": 3,
+      "source": "lvdt",
+      "question": "How does the movement of the core in an LVDT produce an output signal?",
+      "questionType": "relationship",
+      "expectedAnswer": "The LVDT has a primary coil and two secondary coils wound on a cylindrical form. When AC excitation is applied to the primary coil, it induces voltages in the two secondary coils. As the ferromagnetic core moves linearly through the coils, the mutual inductance between the primary and each secondary changes, causing the differential voltage output to vary proportionally with core displacement.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-3"
+      ],
+      "success": true,
+      "httpStatus": 200,
+      "timedOut": false,
+      "rateLimited": false,
+      "error": null,
+      "generatedAnswer": "The movement of the core in an LVDT produces an output signal through the following mechanism:\n\n* **Inductive Coupling Changes:** The LVDT has a primary center coil and two outer secondary coils (upper and lower) connected in series opposition. An alternating current drives the primary coil, inducing voltages in each secondary coil based on their mutual inductance. As the core moves, the primary's linkage to the two secondary coils changes, causing the induced voltages in the secondary coils to change.\n* **Differential Voltage:** Because the secondary windings are connected in series opposition, the output voltage is the difference between the top secondary voltage and the bottom secondary voltage. \n* **Null Position:** When the core is in its central position equidistant between the two secondaries, equal voltages are induced in both coils, which cancel each other out so the output voltage is theoretically zero.\n* **Amplitude and Phase:** When the core is displaced toward the top, the voltage in the top secondary coil increases while the bottom decreases, and the resulting output voltage increases from zero in phase with the primary voltage. When the core moves in the opposite direction, the output voltage also increases from zero, but its phase is opposite to that of the primary. \n* **Direction and Distance:** The phase of the output voltage determines the direction of the displacement (up or down), and the amplitude indicates the amount of displacement.",
+      "finishReason": "stop",
+      "retrievedChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-3",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-5",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1"
+      ],
+      "similarityScores": [
+        0.7972,
+        0.8254,
+        0.8031,
+        0.7393,
+        0.7394
+      ],
+      "relevanceScores": [
+        0.79901963,
+        0.7869018,
+        0.7657514,
+        0.7325349,
+        0.72884524
+      ],
+      "sourceUrls": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer"
+      ],
+      "latencyMs": 3076,
+      "abstained": false,
+      "recallAt5Hit": true,
+      "abstentionCorrect": null
+    },
+    {
+      "questionId": 4,
+      "source": "lvdt",
+      "question": "How many coils does an LVDT typically have and what are they called?",
+      "questionType": "specific",
+      "expectedAnswer": "An LVDT typically has three coils: one primary coil and two secondary coils. The secondary coils are connected in series opposition (reverse series).",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2"
+      ],
+      "success": true,
+      "httpStatus": 200,
+      "timedOut": false,
+      "rateLimited": false,
+      "error": null,
+      "generatedAnswer": "An LVDT typically has three solenoidal coils placed end-to-end around a tube:\n1. The **center coil**, which is the primary.\n2. The **two outer coils**, which are the upper and lower secondary windings.",
+      "finishReason": "stop",
+      "retrievedChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-3",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-5"
+      ],
+      "similarityScores": [
+        0.7954,
+        0.7668,
+        0.7305,
+        0.7411,
+        0.7389
+      ],
+      "relevanceScores": [
+        0.7644879,
+        0.7402687,
+        0.580091,
+        0.46978843,
+        0.4671622
+      ],
+      "sourceUrls": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer"
+      ],
+      "latencyMs": 2471,
+      "abstained": false,
+      "recallAt5Hit": true,
+      "abstentionCorrect": null
+    },
+    {
+      "questionId": 5,
+      "source": "lvdt",
+      "question": "What is the difference between an LVDT and an RVDT?",
+      "questionType": "comparison",
+      "expectedAnswer": "An LVDT measures linear (rectilinear) displacement, while an RVDT (Rotary Variable Differential Transformer) measures angular (rotary) displacement. Both use the same differential transformer principle, but the RVDT is designed for rotational measurement.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6"
+      ],
+      "success": true,
+      "httpStatus": 200,
+      "timedOut": false,
+      "rateLimited": false,
+      "error": null,
+      "generatedAnswer": "An LVDT (linear variable differential transformer) is used for measuring linear displacement (position along a given direction), while its counterpart, the RVDT (rotary variable differential transformer), is used for measuring rotary displacement.",
+      "finishReason": "stop",
+      "retrievedChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-5",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6"
+      ],
+      "similarityScores": [
+        0.7432,
+        0.6943,
+        0.709,
+        0.6975,
+        0.7045
+      ],
+      "relevanceScores": [
+        0.8872928,
+        0.6836946,
+        0.6213807,
+        0.59824234,
+        0.52670854
+      ],
+      "sourceUrls": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer"
+      ],
+      "latencyMs": 2310,
+      "abstained": false,
+      "recallAt5Hit": true,
+      "abstentionCorrect": null
+    },
+    {
+      "questionId": 6,
+      "source": "lvdt",
+      "question": "Why is an LVDT considered to have theoretically infinite resolution?",
+      "questionType": "reasoning",
+      "expectedAnswer": "Because an LVDT operates on electromagnetic coupling principles with no physical contact between the core and the coils, there is no friction or mechanical wear. The output varies continuously and smoothly with core position, with no discrete steps, giving it theoretically infinite resolution limited only by the external electronics used to measure the output.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1"
+      ],
+      "success": true,
+      "httpStatus": 200,
+      "timedOut": false,
+      "rateLimited": false,
+      "error": null,
+      "generatedAnswer": "The provided sources do not contain enough information to answer this question. (The text states that LVDTs have a \"virtually infinite cycle life,\" but it does not mention infinite resolution.)",
+      "finishReason": "stop",
+      "retrievedChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-3",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6"
+      ],
+      "similarityScores": [
+        0.7285,
+        0.6729,
+        0.6622,
+        0.6701,
+        0.7397
+      ],
+      "relevanceScores": [
+        0.7244226,
+        0.6954834,
+        0.6246834,
+        0.57236487,
+        0.4703723
+      ],
+      "sourceUrls": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer"
+      ],
+      "latencyMs": 2786,
+      "abstained": true,
+      "recallAt5Hit": true,
+      "abstentionCorrect": null
+    },
+    {
+      "questionId": 7,
+      "source": "lvdt",
+      "question": "What is the maximum sampling rate of a typical LVDT sensor?",
+      "questionType": "unanswerable",
+      "expectedAnswer": "The provided sources do not contain enough information to answer this question. The Wikipedia article on LVDT does not specify a maximum sampling rate.",
+      "expectedSource": "lvdt",
+      "relevantChunkIds": [],
+      "success": true,
+      "httpStatus": 200,
+      "timedOut": false,
+      "rateLimited": false,
+      "error": null,
+      "generatedAnswer": "The provided sources do not contain enough information to answer this question.",
+      "finishReason": "stop",
+      "retrievedChunkIds": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-2",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-1",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-0",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-5",
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer#chunk-6"
+      ],
+      "similarityScores": [
+        0.6904,
+        0.7129,
+        0.6848,
+        0.72,
+        0.7204
+      ],
+      "relevanceScores": [
+        0.5172057,
+        0.41108778,
+        0.3351555,
+        0.31387228,
+        0.3057289
+      ],
+      "sourceUrls": [
+        "https://en.wikipedia.org/wiki/Linear_variable_differential_transformer"
+      ],
+      "latencyMs": 2707,
+      "abstained": true,
+      "recallAt5Hit": null,
+      "abstentionCorrect": true
+    }
+  ]
+}

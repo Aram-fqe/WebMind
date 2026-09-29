@@ -1,6 +1,8 @@
 {
+  "deprecated": true,
+  "deprecation_notice": "This placeholder dataset is NOT the canonical WebMind evaluation set. Use backend/evaluation/dataset.json and npm run eval. Kept only so historical files are not deleted.",
   "version": "1.0",
-  "description": "WebMind Phase 1 evaluation dataset — technical/electronics/instrumentation questions across 5 webpages",
+  "description": "DEPRECATED placeholder — do not use. Canonical dataset: backend/evaluation/dataset.json",
   "created_at": null,
   "pages": [
     {
