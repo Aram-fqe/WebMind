@@ -1,184 +1,141 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+/* ── App layout ─────────────────────────────────────────────────────────── */
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+.app {
+  padding: 2rem;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+.app h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-#center {
+/* ── Health status ──────────────────────────────────────────────────────── */
+
+.health-status {
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.health-status .status-connected {
+  color: #22c55e;
+}
+
+.health-status .status-disconnected {
+  color: #ef4444;
+}
+
+.health-status .status-checking {
+  color: var(--text, #6b6375);
+}
+
+.health-status .error-details {
+  color: #ef4444;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+}
+
+/* ── Ingestion section ──────────────────────────────────────────────────── */
+
+.ingest-section {
+  border-top: 1px solid var(--border, #e5e4e7);
+  padding-top: 1.5rem;
+}
+
+.ingest-section h2 {
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.ingest-form {
   display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  gap: 0.75rem;
+  align-items: flex-start;
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+.ingest-form .url-input {
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  border: 1px solid var(--border, #e5e4e7);
+  border-radius: 6px;
+  background: var(--bg, #fff);
+  color: var(--text-h, #08060d);
+  outline: none;
+  transition: border-color 0.2s;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+.ingest-form .url-input:focus {
+  border-color: var(--accent, #aa3bff);
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+.ingest-form .url-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.ingest-form .ingest-btn {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent, #aa3bff);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+.ingest-form .ingest-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+.ingest-form .ingest-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+/* ── Validation error ───────────────────────────────────────────────────── */
+
+.validation-error {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* ── Ingestion result messages ──────────────────────────────────────────── */
+
+.ingest-success {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 6px;
+  color: #16a34a;
+  font-size: 0.9rem;
+}
+
+.ingest-success .success-title {
+  font-weight: 600;
+}
+
+.ingest-success .success-details {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.ingest-error {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  color: #ef4444;
+  font-size: 0.9rem;
 }
