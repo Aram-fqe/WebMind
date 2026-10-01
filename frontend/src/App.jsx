@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { checkHealth, ingestUrl } from './api/client.js'
+import { checkHealth, ingestUrl, askQuestion } from './api/client.js'
 import './App.css'
 
 // ---------------------------------------------------------------------------
@@ -80,6 +80,37 @@ function App() {
     }
   }
 
+  // ── Q&A state ───────────────────────────────────────────────────────────
+  const [question, setQuestion] = useState('')
+  const [questionError, setQuestionError] = useState(null)
+  const [asking, setAsking] = useState(false)
+  const [askResult, setAskResult] = useState(null) // { type: 'success' | 'error', data | message }
+
+  async function handleAsk(e) {
+    e.preventDefault()
+
+    // Client-side validation — reject empty / whitespace-only
+    const trimmed = question.trim()
+    if (!trimmed) {
+      setQuestionError('Please enter a question.')
+      return
+    }
+
+    setQuestionError(null)
+    setAskResult(null)
+    setAsking(true)
+
+    try {
+      const result = await askQuestion(trimmed)
+      setAskResult({ type: 'success', data: result })
+    } catch (err) {
+      // err is always an ApiError — .message is user-safe
+      setAskResult({ type: 'error', message: err.message })
+    } finally {
+      setAsking(false)
+    }
+  }
+
   // Determine health status CSS class
   let statusClass = 'status-checking'
   if (status === 'Connected') statusClass = 'status-connected'
@@ -146,6 +177,78 @@ function App() {
           <div className="ingest-error">
             ✗ {ingestResult.message}
           </div>
+        )}
+      </div>
+
+      {/* ── Q&A ──────────────────────────────────────────────────────────── */}
+      <div className="ask-section">
+        <h2>Ask WebMind</h2>
+
+        <form className="ask-form" onSubmit={handleAsk}>
+          <input
+            id="question-input"
+            className="question-input"
+            type="text"
+            placeholder="What does this webpage explain about?"
+            value={question}
+            onChange={(e) => {
+              setQuestion(e.target.value)
+              if (questionError) setQuestionError(null)
+            }}
+            disabled={asking}
+          />
+          <button
+            id="ask-btn"
+            className="ask-btn"
+            type="submit"
+            disabled={asking}
+          >
+            {asking ? 'Asking…' : 'Ask WebMind'}
+          </button>
+        </form>
+
+        {questionError && (
+          <p className="validation-error">{questionError}</p>
+        )}
+
+        {askResult?.type === 'error' && (
+          <div className="ask-error">
+            ✗ {askResult.message}
+          </div>
+        )}
+
+        {askResult?.type === 'success' && (
+          <>
+            <div className="answer-block">
+              <div className="answer-label">Answer</div>
+              <div className="answer-text">{askResult.data.answer}</div>
+            </div>
+
+            {askResult.data.sources && askResult.data.sources.length > 0 && (
+              <div className="sources-block">
+                <div className="sources-label">
+                  Sources ({askResult.data.sources.length})
+                </div>
+                <ul className="sources-list">
+                  {askResult.data.sources.map((src) => (
+                    <li key={src.chunk_id}>
+                      <a
+                        className="source-url"
+                        href={src.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {src.source_url}
+                      </a>
+                      <span className="source-score">
+                        (relevance: {(src.relevance_score * 100).toFixed(0)}%)
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
