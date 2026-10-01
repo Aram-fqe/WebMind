@@ -224,30 +224,33 @@ function App() {
               <div className="answer-text">{askResult.data.answer}</div>
             </div>
 
-            {askResult.data.sources && askResult.data.sources.length > 0 && (
-              <div className="sources-block">
-                <div className="sources-label">
-                  Sources ({askResult.data.sources.length})
+            {askResult.data.sources && askResult.data.sources.length > 0 && (() => {
+              // Deduplicate sources by URL — users see one link per page, not per chunk
+              const uniqueSources = [...new Map(
+                askResult.data.sources.map((s) => [s.source_url, s])
+              ).values()]
+              return (
+                <div className="sources-block">
+                  <div className="sources-label">
+                    Sources ({uniqueSources.length})
+                  </div>
+                  <ul className="sources-list">
+                    {uniqueSources.map((src) => (
+                      <li key={src.source_url}>
+                        <a
+                          className="source-url"
+                          href={src.source_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {src.source_url}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="sources-list">
-                  {askResult.data.sources.map((src) => (
-                    <li key={src.chunk_id}>
-                      <a
-                        className="source-url"
-                        href={src.source_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {src.source_url}
-                      </a>
-                      <span className="source-score">
-                        (relevance: {(src.relevance_score * 100).toFixed(0)}%)
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+              )
+            })()}
           </>
         )}
       </div>
