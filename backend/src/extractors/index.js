@@ -1,4 +1,5 @@
 import { CheerioExtractor } from './cheerioExtractor.js';
+import { PlaywrightExtractor } from './playwrightExtractor.js';
 
 const defaultExtractor = new CheerioExtractor();
 
@@ -14,4 +15,4 @@ export async function extract(url, options = {}) {
   return defaultExtractor.extract(url, options);
 }
 
-export { CheerioExtractor };
+export { CheerioExtractor, PlaywrightExtractor };
