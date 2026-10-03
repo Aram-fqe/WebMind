@@ -52,6 +52,21 @@ async function runTests() {
     console.error('❌ Ingestion pipeline test failed:', err);
   }
 
+  // Test 5: Image URL routed to OCR
+  console.log('\nTest 5: Image URL routed to OCR');
+  try {
+    const imageUrl = 'https://www.w3.org/WAI/WCAG21/Techniques/pdf/img/table-word.jpg';
+    const result = await extract(imageUrl, { timeout: 30000 });
+    assert.strictEqual(result.metadata.extractor, 'ocr', 'Should use OCR for image URLs');
+    assert(result.text.length > 0, 'Should extract text from image');
+    console.log(`✅ Image OCR routing test passed.`);
+    console.log(`URL: ${imageUrl.substring(0, 60)}...`);
+    console.log(`Selected extractor: ${result.metadata.extractor}`);
+    console.log(`OCR text length: ${result.text.length}`);
+  } catch (err) {
+    console.error('❌ Image OCR routing test failed:', err.message);
+  }
+
   console.log('\nAll Extractor Routing tests executed.');
 }
 

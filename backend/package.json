@@ -17,6 +17,7 @@
     "express": "^4.19.2",
     "openai": "^7.4.0",
     "pg": "^8.23.0",
-    "playwright": "^1.63.0"
+    "playwright": "^1.63.0",
+    "tesseract.js": "^7.0.0"
   }
 }

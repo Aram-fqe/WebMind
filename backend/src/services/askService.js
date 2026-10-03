@@ -85,7 +85,7 @@ export async function ask(question, options = {}) {
       retrieval_count: 0,
       relevant_count: 0,
       relevance_gate_passed: false,
-      latency_ms: Date.now() - startTime,
+      latency_ms: Math.round(performance.now() - startTime),
     });
     return response;
   }
@@ -117,7 +117,7 @@ export async function ask(question, options = {}) {
       retrieval_count: chunks.length,
       relevant_count: 0,
       relevance_gate_passed: false,
-      latency_ms: Date.now() - startTime,
+      latency_ms: Math.round(performance.now() - startTime),
     });
     return response;
   }
@@ -151,7 +151,7 @@ export async function ask(question, options = {}) {
     retrieval_count: chunks.length,
     relevant_count: relevantChunks.length,
     relevance_gate_passed: true,
-    latency_ms: Date.now() - startTime,
+    latency_ms: Math.round(performance.now() - startTime),
   });
 
   if (result.timings) {
