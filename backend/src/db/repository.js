@@ -104,7 +104,7 @@ export async function searchSimilarChunks(queryVector, options = {}) {
     chunk_text: row.text,
     source_url: row.source_url,
     page_title: row.page_title,
-    similarity_score: parseFloat(row.similarity_score.toFixed(4)),
+    similarity_score: row.similarity_score != null ? parseFloat(row.similarity_score.toFixed(4)) : 0,
     chunk_index: row.chunk_index,
     metadata: row.metadata
   }));
