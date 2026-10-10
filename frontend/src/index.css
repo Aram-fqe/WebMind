@@ -1,111 +1,179 @@
+/* ==========================================================================
+   WebMind — Design System
+   Dark-first, Inter typography, refined token set.
+   ========================================================================== */
+
+/* ── Design Tokens ────────────────────────────────────────────────────────── */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Surface palette — dark navy/charcoal */
+  --wm-bg-primary:    #0f1117;
+  --wm-bg-secondary:  #161820;
+  --wm-bg-card:       #1c1e28;
+  --wm-bg-elevated:   #232530;
+  --wm-bg-input:      #1a1c26;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Text */
+  --wm-text-primary:   #e4e5ea;
+  --wm-text-secondary: #8b8d9a;
+  --wm-text-muted:     #5c5e6b;
+  --wm-text-inverse:   #0f1117;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Brand accent — purple */
+  --wm-accent:         #8b5cf6;
+  --wm-accent-hover:   #7c4deb;
+  --wm-accent-subtle:  rgba(139, 92, 246, 0.12);
+  --wm-accent-border:  rgba(139, 92, 246, 0.25);
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Semantic colors */
+  --wm-success:        #22c55e;
+  --wm-success-subtle: rgba(34, 197, 94, 0.10);
+  --wm-success-border: rgba(34, 197, 94, 0.25);
+
+  --wm-error:          #ef4444;
+  --wm-error-subtle:   rgba(239, 68, 68, 0.10);
+  --wm-error-border:   rgba(239, 68, 68, 0.25);
+
+  --wm-warning:        #f59e0b;
+
+  /* Borders & dividers */
+  --wm-border:         #2a2c38;
+  --wm-border-subtle:  #222430;
+
+  /* Shadows */
+  --wm-shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.3);
+  --wm-shadow-md:  0 4px 12px rgba(0, 0, 0, 0.3);
+  --wm-shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.35);
+
+  /* Radii */
+  --wm-radius-sm:  6px;
+  --wm-radius-md:  10px;
+  --wm-radius-lg:  14px;
+  --wm-radius-xl:  20px;
+
+  /* Spacing scale (4px base) */
+  --wm-space-1:  4px;
+  --wm-space-2:  8px;
+  --wm-space-3:  12px;
+  --wm-space-4:  16px;
+  --wm-space-5:  20px;
+  --wm-space-6:  24px;
+  --wm-space-8:  32px;
+  --wm-space-10: 40px;
+  --wm-space-12: 48px;
+
+  /* Typography */
+  --wm-font-sans:  'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --wm-font-mono:  'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  /* Transitions */
+  --wm-transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --wm-transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --wm-transition-slow:   350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --wm-content-width: 720px;
+  --wm-page-width:    1080px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+/* ── Reset & Base ─────────────────────────────────────────────────────────── */
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  margin: 0;
+  font-family: var(--wm-font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--wm-text-primary);
+  background: var(--wm-bg-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* ── Typography ───────────────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--wm-font-sans);
+  font-weight: 600;
+  color: var(--wm-text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
 p {
   margin: 0;
+  color: var(--wm-text-secondary);
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+a {
+  color: var(--wm-accent);
+  text-decoration: none;
+  transition: color var(--wm-transition-fast);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+a:hover {
+  color: var(--wm-accent-hover);
+  text-decoration: underline;
+}
+
+/* ── Focus states ─────────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--wm-accent);
+  outline-offset: 2px;
+}
+
+/* ── Scrollbar (Webkit) ───────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--wm-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wm-text-muted);
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Selection ────────────────────────────────────────────────────────────── */
+
+::selection {
+  background: var(--wm-accent-subtle);
+  color: var(--wm-text-primary);
 }
