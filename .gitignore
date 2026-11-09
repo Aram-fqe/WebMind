@@ -8,3 +8,8 @@ build/
 # Evaluation & runtime logs
 backend/logs/
 backend/eval/results/
+
+docs/decision.md
+docs/roadmap.md
+
+
